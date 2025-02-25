@@ -1,0 +1,2 @@
+ALTER TABLE "user" ADD COLUMN "user_permisison" integer;--> statement-breakpoint
+ALTER TABLE "user" ADD CONSTRAINT "user_user_permisison_user_permission_id_fk" FOREIGN KEY ("user_permisison") REFERENCES "public"."user_permission"("id") ON DELETE no action ON UPDATE no action;
