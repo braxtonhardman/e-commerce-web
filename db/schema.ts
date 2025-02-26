@@ -1,4 +1,4 @@
-import { pgTable, integer, varchar, serial, numeric } from "drizzle-orm/pg-core";
+import { pgTable, primaryKey, integer, varchar, serial, numeric } from "drizzle-orm/pg-core";
 
 export const user = pgTable('user',{
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -23,13 +23,10 @@ export const permission = pgTable('permission', {
 
 // Union table to link users to a permission 
 export const user_permission = pgTable('user_permission', {
-    id: serial().primaryKey(),
-    user_id: integer().references(() => user.id), 
-    permission_id: integer().references(() => permission.id)
-});
+    user_id: integer().references(() => user.id),
+    permission_id: integer().references(() => permission.id),
+}, (table) => [
+    primaryKey({columns: [table.user_id, table.permission_id]})
+]);
 
-// export const cart = pgTable('cart', {
-//     id: serial().primaryKey(), 
-
-
-// });
+// 1-M relationship with item table where a item can have many images but an image can belong to one and only one item

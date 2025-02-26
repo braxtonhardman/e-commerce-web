@@ -9,7 +9,7 @@ import { getUser, addUser } from "@/db/functions";
 
 // Callbacks are asynchronous functions you can use to control what happens when an action is performed.
 // So if a user is not in the database we want to add a user to the database using Drizzle to talk to our database 
-export const handler = NextAuth({
+export const authOptions = {
   // Configure one or more authentication providers
   providers: [
     // Secifies which provider to ues whic is set up in google cloud 
@@ -50,12 +50,30 @@ export const handler = NextAuth({
         return true;
     },
     async jwt({ token, account, profile }) {
-        // Persist the OAuth access_token and or the user id to the token right after signin
-        if (account) {
-          token.accessToken = account.access_token
-          token.id = profile.id
+      // Ensure the token object has a `user` property
+      // Make sure the token user exists before trying to add email to it 
+      if (!token.user) {
+        token.user = {};
+      }
+    
+      // Persist the OAuth access_token and the user id to the token after sign-in
+      if (account) {
+        token.accessToken = account.access_token;
+        token.id = profile?.id;  // Use profile?.id in case profile is not null
+      }
+    
+      if (profile) {
+        token.user.email = profile.email;  // Set the user's email on the token
+      }
+    
+      return token;
+    },
+      // This callback is triggered when the session is being created
+      async session({ session, token }) {
+        if (token) {
+          session.user.email = token.email;  // Add email from token to the session object
         }
-        return token
+        return session;
       },
       async redirect({ baseUrl }) { 
         // On sign in return to home page which is baseURL
@@ -63,7 +81,9 @@ export const handler = NextAuth({
       }
   },
   
-});
+};
 
-export { handler as GET, handler as POST }
+// This is for app routes
+export const GET = (req, res) => NextAuth(req, res, authOptions);
+export const POST = (req, res) => NextAuth(req, res, authOptions);
 

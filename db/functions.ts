@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { drizzle, NeonHttpDatabase } from 'drizzle-orm/neon-http';
-import { permission, user } from './schema';  // Ensure this path is correct
+import { permission, user, user_permission } from './schema';  // Ensure this path is correct
 import { eq } from 'drizzle-orm'; // This is used to compare if something is equal ( Filter and Conditional Operators )
 
 
@@ -67,5 +67,26 @@ export async function addPermissions() {
         console.log(per);
     } catch(error) { 
         console.error(error);
+    }
+}
+
+async function getPermissions(userEmail: string): Promise<number> { 
+    try { 
+        const db = await initDB(); 
+        const id = await db.select(user.id).form(user).where(user.email, userEmail)
+        const permission = await db.select(user_permission.permission_id).from(user_permission).where(eq(user_permission.user_id, id))
+        return permission;
+        
+    } catch(error) { 
+        return -1
+    }
+}
+
+export async function isAdmin(userEmail: string): Promise<boolean> { 
+    const permission = await getPermissions(userEmail);
+    if(permission == 1) { 
+        return true;
+    } else { 
+        return false; 
     }
 }
