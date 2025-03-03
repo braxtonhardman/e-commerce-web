@@ -11,20 +11,6 @@ function Navbar() {
           <li className="m-2">
             <Link href="/">Home</Link>
           </li>
-          <li className="m-2 relative group">
-            <span className="cursor-pointer">Topics ▾</span>
-            <ul className="absolute left-0 -mt-1 bg-white border rounded-md shadow-md hidden group-hover:flex flex-col transition-opacity duration-300 z-50">
-              <li className="p-2 hover:bg-gray-200">
-                <Link href="/topics/sports">Sports</Link>
-              </li>
-              <li className="p-2 hover:bg-gray-200">
-                <Link href="/topics/technology">Technology</Link>
-              </li>
-              <li className="p-2 hover:bg-gray-200">
-                <Link href="/topics/politics">Politics</Link>
-              </li>
-            </ul>
-          </li>
           <li className="m-2">
             <Link href="/about" className="">About</Link>
           </li>
