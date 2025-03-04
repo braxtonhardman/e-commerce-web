@@ -11,25 +11,22 @@ interface ItemProps {
 function Item({ id, imageUrl, name, price }: ItemProps) {
   return (
     <Link href={`/product/${id}`} className="block">
-      <div className="flex flex-col shadow-sm border  overflow-hidden hover:shadow-blue-500 transition-shadow duration-300">
+      <div className="flex h-full flex-col shadow-sm overflow-hidden hover:shadow-blue-500 transition-shadow duration-300">
         
         {/* Image Section */}
         <img 
           src={imageUrl} 
           alt={name} 
-          className="object-cover w-full h-64" 
+          className="object-cover w-full h-5/6" 
         />
 
         {/* Content Section */}
-        <div className="p-4">
           {/* Name and Price */}
-          <div className="flex justify-between items-center">
-            <p className="font-semibold text-lg text-gray-800">{name}</p>
-            <p className="font-bold text-lg text-gray-900">${price}</p>
+          <div className="flex w-full border h-1/6 justify-between items-center align-bottom p-4 ">
+            <p className="font-semibold text-lg text-gray-800 font-montserrat">{name}</p>
+            <p className="font-bold text-lg text-gray-900 font-montserrat">${price}</p>
           </div>
 
-      
-        </div>
       </div>
     </Link>
     

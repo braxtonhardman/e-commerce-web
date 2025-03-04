@@ -15,6 +15,7 @@ export default {
     },
     fontFamily: { 
       sigmar: ["var(--font-sigmar)"],
+      montserrat: ["var(--font-montserrat)"]
     }
   },
   plugins: [],

@@ -44,12 +44,15 @@ const items = [
 function ItemContainer() {  
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 m-2">
-      {items.map((item) => (
-        <Item key={item.id} id={Number(item.id)} imageUrl={item.imageUrl} name={item.name} price={item.price} />
-      ))}
+    <div className="flex flex-col items-center">
+      <h1 className="font-sigmar text-3xl text-black p-4 ml-5 mt-5">New Releases</h1>
+      <div className="w-5/6 h-screen grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7 ml-5">
+        {items.map((item) => (
+          <Item key={item.id} id={Number(item.id)} imageUrl={item.imageUrl} name={item.name} price={item.price} />
+        ))}
+      </div>
     </div>
-  )
-}
+  
+)}
 
 export default ItemContainer
