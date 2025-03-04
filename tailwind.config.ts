@@ -14,7 +14,7 @@ export default {
       },
     },
     fontFamily: { 
-      oswald: ["var(--font-oswald)"],
+      sigmar: ["var(--font-sigmar)"],
     }
   },
   plugins: [],

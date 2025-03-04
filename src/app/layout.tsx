@@ -4,13 +4,12 @@ import "./globals.css";
 import NavBar from "./components/NavBar"
 import { SessionProvider } from "next-auth/react";
 import CartProvider from "./CartContext";
-import ImageContainer from "./components/ImageContainer";
-import { Oswald } from "next/font/google"
+import { Sigmar } from "next/font/google"
 
-const oswald = Oswald({
+const sigmar = Sigmar({
   subsets: ["latin"],
-  variable: "--font-oswald",
-  weight: ["300", "400", "500"]
+  variable: "--font-sigmar",
+  weight: "400"
 })
 export default function RootLayout({
   children,
@@ -19,8 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${oswald.variable}`}>
-        <ImageContainer /> 
+      <body className={`${sigmar.variable}`}>
         <CartProvider>
           <SessionProvider>
             <NavBar />

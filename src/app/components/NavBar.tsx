@@ -5,14 +5,14 @@ import { useSession, signOut } from 'next-auth/react'
 function Navbar() {
   const {data: session } = useSession();
   return (
-    <div className="flex flex-row shadow-md items-center p-1">
-        <h1 className="m-2 ml-10 font-oswald text-5xl">Surf and Saddle</h1>
+    <div className="flex flex-row items-center p-1 mt-2 absolute w-full">
+        <h1 className="m-2 ml-10 font-sigmar text-4xl text-white">Surf and Saddle</h1>
       
       <div className="flex flex-row flex-grow justify-end align-center">
         {!session ? (
           // If session is null, show SignIn button
-          <div className="flex align-center m-2 bg-neutral-950 hover:bg-neutral-600 rounded-md">
-            <Link href="/api/auth/signin" className="text-white p-2">SignIn</Link>
+          <div className="flex align-center m-2 bg-white hover:bg-neutral-600 rounded-md">
+            <Link href="/api/auth/signin" className="text-black p-2">SignIn</Link>
           </div>
         ) : (
           // If session exists, show the user profile or logout option
