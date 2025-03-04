@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { drizzle, NeonHttpDatabase } from 'drizzle-orm/neon-http';
+import { drizzle } from 'drizzle-orm/neon-http';
 import { permission, user, user_permission } from './schema';  // Ensure this path is correct
 import { eq } from 'drizzle-orm'; // This is used to compare if something is equal ( Filter and Conditional Operators )
 

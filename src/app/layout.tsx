@@ -3,6 +3,7 @@
 import "./globals.css";
 import NavBar from "./components/NavBar"
 import { SessionProvider } from "next-auth/react";
+import CartProvider from "./CartContext";
 
 
 export default function RootLayout({
@@ -13,10 +14,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider>
-          <NavBar />
-        </SessionProvider>
-        {children}
+        
+        <CartProvider>
+          <SessionProvider>
+            <NavBar />
+            {children}
+          </SessionProvider>
+        </CartProvider>
+        
       </body>
     </html>
   );

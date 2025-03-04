@@ -46,7 +46,7 @@ function ItemContainer() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 m-2">
       {items.map((item) => (
-        <Item key={item.id} imageUrl={item.imageUrl} name={item.name} price={item.price} />
+        <Item key={item.id} id={Number(item.id)} imageUrl={item.imageUrl} name={item.name} price={item.price} />
       ))}
     </div>
   )
