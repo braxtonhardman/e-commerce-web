@@ -5,16 +5,8 @@ import { useSession, signOut } from 'next-auth/react'
 function Navbar() {
   const {data: session } = useSession();
   return (
-    <div className="flex flex-row shadow-md items-center p-2">
-        <h1 className="m-2 mr-10">Surf and Saddle</h1>
-        <ol className="flex flex-row items-center justify-between">
-          <li className="m-2">
-            <Link href="/">Home</Link>
-          </li>
-          <li className="m-2">
-            <Link href="/about" className="">About</Link>
-          </li>
-      </ol>  
+    <div className="flex flex-row shadow-md items-center p-1">
+        <h1 className="m-2 ml-10 font-oswald text-5xl">Surf and Saddle</h1>
       
       <div className="flex flex-row flex-grow justify-end align-center">
         {!session ? (

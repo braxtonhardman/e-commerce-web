@@ -13,6 +13,9 @@ export default {
         foreground: "var(--foreground)",
       },
     },
+    fontFamily: { 
+      oswald: ["var(--font-oswald)"],
+    }
   },
   plugins: [],
 } satisfies Config;
