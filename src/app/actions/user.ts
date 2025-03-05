@@ -68,10 +68,3 @@ export async function createUser(firstName: string, lastName: string, email: str
         return { error: 'An error occurred while creating the user' };
     }
 }
-
-/* 
-// Need to figure out how to limit this to only req from website url ( CORS )
-async function createUser() { 
-
-}
-*/

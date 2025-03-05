@@ -1,26 +1,42 @@
 "use server";
-import { drizzle } from 'drizzle-orm/neon-http';
-import { item } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import "dotenv/config"
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
+import { item } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import * as schema from "@/db/schema";
 
-// All functions for server actions related to the item table 
-export async function getProduct(id: number) { 
+type SuccessResponse = {
+    message: string;
+};
+  
+type ErrorResponse = {
+    error: string;
+};
+
+export async function getAllProducts() { 
+    // Authentication here
     try { 
-        // Initalize database connection 
-        const db = drizzle(process.env.DATABASE_URL!);
-        // Get resposne 
-        const response = await db.select().from(item).where(eq(item.id, id))
+        const sql = neon(process.env.DATABASE_URL!);
+        const db = drizzle(sql, { schema });
+        const response = await db.select().from(item);
         console.log(response)
+    } catch(error) { 
+        console.error(error)
+    }
+}
 
-        if (response.length > 0) { 
-            return response[0]
-        } else { 
-            throw Error()
-        }
+// id: integer().primaryKey().generatedAlwaysAsIdentity(), // 
+// name: varchar(), 
+// description: varchar(), 
+// price: numeric(),
+// qoh: numeric()
+export async function createProduct(name: string, desc: string, price: number, qoh:number) { 
+    // Need protection here 
+    try { 
+        const sql = neon(process.env.DATABASE_URL!)
 
     } catch(error) { 
-        // Throw error to wherever is calling this function 
-        console.error(error)
-        throw Error("Error getting product")
+        console.log(error)
     }
-} 
+}
