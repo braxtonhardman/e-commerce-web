@@ -31,3 +31,8 @@ export const user_permission = pgTable("user_permission", {
   );
 
 // 1-M relationship with item table where a item can have many images but an image can belong to one and only one item
+export const item_images = pgTable("item_images", {
+    id: serial().primaryKey(), 
+    item_id: integer("item_id").references(() => item.id),
+    image_url: varchar()
+});

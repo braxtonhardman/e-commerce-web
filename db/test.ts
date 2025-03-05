@@ -1,5 +1,6 @@
 import "dotenv/config"
-import { getAllProducts, createProduct } from "@/src/app/actions/item"
+import { getImage } from "@/src/app/actions/item_images"
+import { getProduct, getAllProducts } from "@/src/app/actions/item"
 
 // id: integer().primaryKey().generatedAlwaysAsIdentity(), // 
 // name: varchar(), 
@@ -8,7 +9,8 @@ import { getAllProducts, createProduct } from "@/src/app/actions/item"
 // qoh: numeric()
 
 async function main() { 
-    await getAllProducts()
+   const response = await getAllProducts()
+   console.log(response)
 }
 
 main()

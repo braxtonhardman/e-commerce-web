@@ -1,25 +1,37 @@
 "use client"; 
-import React from 'react'
-import { createContext } from 'react'
-import { useState } from 'react'
+import React, { createContext, useState, useEffect } from 'react';
 
-const CartContext = createContext({
+// CartContext with default values
+export const CartContext = createContext({
     items: [], 
-    addToCart: () => {}, 
+    addToCart: (item) => {}, 
     removeFromCart: () => {}, 
+});
 
-})
 function CartProvider({children}) {
+    const [cartItems, setCartItems] = useState([]);
 
-    const [cartItems, setCartItems] = useState([])
+    // Initialize cart from localStorage on mount
+    useEffect(() => {
+        const savedCart = localStorage.getItem('cart');
+        if (savedCart) {
+            setCartItems(JSON.parse(savedCart));  // Parse and set cart items from localStorage
+        }
+    }, []);
 
+    // Update localStorage whenever cartItems changes
+    useEffect(() => {
+        if (cartItems.length > 0) {
+            localStorage.setItem('cart', JSON.stringify(cartItems)); // Save cartItems to localStorage
+        }
+    }, [cartItems]);
+
+    // Add item to cart
     const addToCart = (item) => {
         setCartItems((prevItems) => {
-            // Check if the item already exists
             const existingItemIndex = prevItems.findIndex((element) => element.product_id === item.product_id);
-    
+
             if (existingItemIndex !== -1) {
-                // Item exists, update its quantity
                 const updatedItems = [...prevItems];
                 updatedItems[existingItemIndex] = {
                     ...updatedItems[existingItemIndex],
@@ -32,21 +44,23 @@ function CartProvider({children}) {
         });
     };
 
+    // Remove item from cart
     const removeFromCart = (itemId) => {
         setCartItems((prevItems) => prevItems.filter((item) => item.product_id !== itemId));
     };
 
+    // Provide cartItems, addToCart, and removeFromCart to the rest of the app
     const contextValue = {
         items: cartItems, 
         addToCart, 
         removeFromCart
-    }
+    };
 
-  return (
-    <CartContext.Provider value={contextValue}>
-      {children}
-    </CartContext.Provider>
-  )
+    return (
+        <CartContext.Provider value={contextValue}>
+            {children}
+        </CartContext.Provider>
+    );
 }
 
-export default CartProvider
+export default CartProvider;

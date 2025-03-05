@@ -5,24 +5,29 @@ import { neon } from "@neondatabase/serverless";
 import { item } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import * as schema from "@/db/schema";
+import { getImage } from "./item_images";
 
-type SuccessResponse = {
-    message: string;
-};
-  
-type ErrorResponse = {
-    error: string;
-};
+type ProductArray = (ProductType | null)[]; 
 
-export async function getAllProducts() { 
+ 
+export async function getAllProducts(): Promise<ProductArray | null> { 
     // Authentication here
     try { 
         const sql = neon(process.env.DATABASE_URL!);
         const db = drizzle(sql, { schema });
-        const response = await db.select().from(item);
-        console.log(response)
+        const response = await db.select({id: item.id}).from(item);
+        const data = []
+        if(response.length > 0) { 
+            for(const item of response) { 
+                const object = await getProduct(item.id)
+                data.push(object)
+            }
+            return data
+        } else { 
+            throw Error("Error fetching products")
+        }
     } catch(error) { 
-        console.error(error)
+        return null
     }
 }
 
@@ -31,14 +36,30 @@ export async function getAllProducts() {
 // description: varchar(), 
 // price: numeric(),
 // qoh: numeric()
-export async function getProduct(id: number) { 
+
+type ProductType = {
+    id: number,
+    name: string | null,
+    desc: string | null,
+    price: string | null,
+    images: string[] | null
+}
+
+export async function getProduct(id: number): Promise<ProductType | null> { 
     try { 
         const sql = neon(process.env.DATABASE_URL!);
         const db = drizzle(sql, { schema });
-        const response = await db.select().from(item).where(eq(item.id, id))
+        const response = await db.select().from(item).where(eq(item.id, id));
+        const images = await getImage(id);
+        
         if(response.length > 0) { 
-            return {id: response[0].id, name: response[0].name, desc: response[0].description, price: response[0].price}
-        }
+            if(images) {
+                return {id: response[0].id, name: response[0].name, desc: response[0].description, price: response[0].price, images: images}
+            } else { 
+                return {id: response[0].id, name: response[0].name, desc: response[0].description, price: response[0].price, images: null}
+            }
+        } 
+        return null
     } catch(error) { 
         return null
     }
