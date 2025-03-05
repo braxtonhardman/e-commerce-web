@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
-import Link from 'next/link'
-import { useSession, signOut } from 'next-auth/react'
-import { FaShoppingCart } from 'react-icons/fa'
+"use client";
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { useSession, signOut } from 'next-auth/react';
+import { FaUser, FaShoppingCart } from 'react-icons/fa';
 
 function Navbar() {
   const { data: session } = useSession()
+  const [isOpen, setIsOpen] = useState(false)
 
 
   return (
@@ -17,30 +19,37 @@ function Navbar() {
         {!session ? (
           // If session is null, show SignIn button
           <div className="flex items-center m-2 hover:bg-neutral-600 rounded-md">
-            <Link href="/api/auth/signin"className="p-2 bg-black text-white font-sigmar">
+            <Link href="/api/auth/signin" className="p-2 bg-black text-white font-sigmar hover:bg-gray-700">
               Login / SignUp
             </Link>
           </div>
         ) : (
-          // If session exists, show the user profile or logout option
-          <div className="flex flex-row">
-            <div className="flex items-center m-2 bg-neutral-950 hover:bg-neutral-600 rounded-md">
-              <Link
-                href="/dashboard"
-                className="p-2 'text-black"
-              >
-                profile
-              </Link>
+          
+          // If session exists, show the user profile or logout option           
+            <div className="flex items-center m-2" 
+                 onMouseEnter={() => setIsOpen(true)}
+                 onMouseLeave={() => setIsOpen(false)}
+            >
+        
+              {isOpen ? (
+                  <div className="flex flex-row ">
+                    <Link href="/dashboard" className="block mr-2 px-4 py-2 text-sm bg-black text-white font-sigmar hover:bg-gray-700">
+                      Dashboard
+                    </Link>
+
+                    <button 
+                    onClick={() => signOut()} 
+                    className="w-full text-left px-4 py-2 text-sm  bg-black text-white font-sigmar hover:bg-gray-700"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                                  
+              ): (
+                <FaUser className="text-2xl" />
+              )}
+              
             </div>
-            <div className="flex align-center p-2 m-2 bg-neutral-950 hover:bg-neutral-600 rounded-md">
-              <button
-                className="p-2 text-black"
-                onClick={() => { signOut() }}
-              >
-                Sign Out
-              </button>
-            </div>
-          </div>
         )}
         <div className="flex items-center m-2 mr-10 hover:bg-neutral-600 rounded-md">
           <Link href="/cart" className="p-2">

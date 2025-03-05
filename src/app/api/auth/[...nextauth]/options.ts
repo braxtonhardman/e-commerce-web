@@ -46,7 +46,6 @@ export const options: NextAuthOptions = {
                             }
                             const bcrypt = require('bcrypt');
                             const match = await bcrypt.compare(credentials.password, current_user.password);
-                            console.log(match);
             
                             if (credentials.email === current_user.email && match) {
                                 // Return a more complete user object with id, email, and role
@@ -55,7 +54,6 @@ export const options: NextAuthOptions = {
                                     email: current_user.email,
                                     role: role || 'default'
                                 };
-                                console.log(user)
                                 return user
                             } else {
                                 return null;
@@ -89,5 +87,6 @@ export const options: NextAuthOptions = {
             if (session?.user) session.user.role = token.role
             return session
         }
+          
     }
 }
