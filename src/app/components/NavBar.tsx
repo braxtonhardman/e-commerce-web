@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
-import { FaUser, FaShoppingCart } from 'react-icons/fa'
+import { FaShoppingCart } from 'react-icons/fa'
 
 function Navbar() {
   const { data: session } = useSession()
@@ -11,14 +11,14 @@ function Navbar() {
     <div
       className="flex flex-row items-center p-2 fixed w-full transition-all bg-white"
     >
-      <h1 className="m-2 ml-10 font-sigmar text-4xl">Surf and Saddle</h1>
+      <Link href="/"><h1 className="m-2 ml-10 font-sigmar text-4xl">Surf and Saddle</h1></Link>
 
       <div className="flex flex-row flex-grow justify-end align-center">
         {!session ? (
           // If session is null, show SignIn button
           <div className="flex items-center m-2 hover:bg-neutral-600 rounded-md">
-            <Link href="/api/auth/signin"className="p-2">
-              <FaUser className="text-2xl text-black"/>
+            <Link href="/api/auth/signin"className="p-2 bg-black text-white font-sigmar">
+              Login / SignUp
             </Link>
           </div>
         ) : (

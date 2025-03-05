@@ -4,7 +4,8 @@ export const user = pgTable('user',{
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     first_name: varchar(),
     last_name: varchar(),
-    email: varchar()
+    email: varchar(),
+    password: varchar() 
 });
 
 export const item = pgTable('item', {
@@ -22,11 +23,11 @@ export const permission = pgTable('permission', {
 });
 
 // Union table to link users to a permission 
-export const user_permission = pgTable('user_permission', {
-    user_id: integer().references(() => user.id),
-    permission_id: integer().references(() => permission.id),
-}, (table) => [
-    primaryKey({columns: [table.user_id, table.permission_id]})
-]);
+export const user_permission = pgTable("user_permission", {
+        id: serial().primaryKey(),
+        user_id: integer("user_id").references(() => user.id), // Explicitly define column name
+        permission_id: integer("permission_id").references(() => permission.id), // Explicitly define column name
+    },
+  );
 
 // 1-M relationship with item table where a item can have many images but an image can belong to one and only one item

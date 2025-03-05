@@ -10,6 +10,7 @@ declare module "next-auth" {
         // the roles using & DefaultSession 
         user: {
             id: string, 
+            email: string,
             role: string, 
         } & DefaultSession
     }
