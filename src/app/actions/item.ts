@@ -31,12 +31,15 @@ export async function getAllProducts() {
 // description: varchar(), 
 // price: numeric(),
 // qoh: numeric()
-export async function createProduct(name: string, desc: string, price: number, qoh:number) { 
-    // Need protection here 
+export async function getProduct(id: number) { 
     try { 
-        const sql = neon(process.env.DATABASE_URL!)
-
+        const sql = neon(process.env.DATABASE_URL!);
+        const db = drizzle(sql, { schema });
+        const response = await db.select().from(item).where(eq(item.id, id))
+        if(response.length > 0) { 
+            return {id: response[0].id, name: response[0].name, desc: response[0].description, price: response[0].price}
+        }
     } catch(error) { 
-        console.log(error)
+        return null
     }
 }

@@ -1,10 +1,14 @@
+"use client";
 import React from 'react'
-import SideBar from './components/SideBar'
 
 function Dashboard() {
   return (
-    <div>
+    <div className="w-full border">
       Hello
+      Hello 
+      <ol>
+        <li>Hello</li>
+      </ol>
     </div>
   )
 }

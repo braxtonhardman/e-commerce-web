@@ -6,11 +6,11 @@ interface ProductPageProps {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-    const item = await getProduct(Number(params.id)); // Call server action
-    console.log(item)
+  const { id } = await params;
+    const item = await getProduct(Number(id)); // Call server action
     if (!item) {
         return <p>Product not found.</p>;
     }
 
-    return <ProductDetails item={item} />;
+    return <ProductDetails item={item}/>
 }
