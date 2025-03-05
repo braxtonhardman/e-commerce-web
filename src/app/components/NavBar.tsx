@@ -8,7 +8,7 @@ function Navbar() {
 
   return (
     <div
-      className="flex flex-row items-center p-2 relative w-full transition-all bg-white"
+      className="flex flex-row items-center p-2 shadow-md relative w-full transition-all bg-white"
     >
       <Link href="/"><h1 className="m-2 ml-5 font-sigmar text-4xl">Surf and Saddle</h1></Link>
 

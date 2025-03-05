@@ -36,22 +36,23 @@ function SignUpPage() {
       <div className="bg-white p-8 rounded-lg shadow-md w-1/3 h-1/3">
         <h2 className="text-2xl font-bold text-center mb-4 font-sigmar">Sign Up</h2>
         <form onSubmit={handleSubmit} className="flex flex-col">
-          <div className="flex flex-row justify-between mb-2">
+            <label className="font-sigmar">First Name</label>
             <input 
               type="text" 
               placeholder="First Name" 
-              className="w-2/5 border rounded-sm p-2 font-sigmar"
+              className="border rounded-sm p-2 mb-2 font-montserrat"
               value={firstName} 
               onChange={(e) => setFirstName(e.target.value)} 
             />
+
+            <label className="font-sigmar">Last Name</label>
             <input 
               type="text" 
               placeholder="Last Name" 
-              className="w-2/5 border rounded-sm p-2 font-sigmar"
+              className="border rounded-sm p-2 mb-2 font-montserrat"
               value={lastName} 
               onChange={(e) => setLastName(e.target.value)} 
             />
-          </div>
 
           <label htmlFor="email" className="font-sigmar">Email</label>
           <input 
