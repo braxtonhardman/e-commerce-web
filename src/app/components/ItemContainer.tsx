@@ -1,35 +1,8 @@
-"use client";
-
 import Item from "./Item";
-import { useEffect, useState} from "react";
 import { getAllProducts } from "../actions/item";
 
-  
-type ProductType = {
-  id: number;
-  name: string | null;
-  desc: string | null;
-  price: string | null;
-  images: string[] | null;
-};
-
-type ProductArray = (ProductType | null)[]; // Array of ProductType or null
-
-function ItemContainer() {  
-  const [products, setProducts] = useState<ProductArray>([]); // Properly type the state
-
-  useEffect(() => {
-    async function getProducts() {
-      const current_products = await getAllProducts();
-      if (current_products) {
-        setProducts(current_products); // Update state with the fetched products
-      } else { 
-        return 
-      }
-    }
-    getProducts();
-  }, []);
-
+async function ItemContainer() {  
+  const products = (await getAllProducts()) || [];
   return (
     <div className="flex flex-col items-center">
       <h1 className="font-sigmar text-3xl text-black p-4 ml-5 mt-5">New Releases</h1>

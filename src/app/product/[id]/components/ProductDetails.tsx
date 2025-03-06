@@ -8,7 +8,10 @@ type ProductType = {
   name: string | null;
   desc: string | null;
   price: string | null;
-  images: string[] | null;
+  images?: string[] | null;
+  color?: string;
+  size?: string;
+  image?: string;
 };
 
 function ProductDetails({ item }: { item: ProductType }) {
@@ -31,9 +34,10 @@ function ProductDetails({ item }: { item: ProductType }) {
       return;
     }
     // Construct the item to be added to the cart
-    const cartItem = {
-      product_id: item.id,
+    const cartItem: ProductType = {
+      id: Number(item.id),
       name: item.name,
+      desc: item.desc,
       price: item.price,
       color: selectedColor,
       size: selectedSize,
@@ -42,7 +46,6 @@ function ProductDetails({ item }: { item: ProductType }) {
 
     // Add the item to the cart
     addToCart(cartItem);
-    console.log(`Added ${item.name} (Size: ${selectedSize}, Color: ${selectedColor}) to cart`);
   };
 
   return (
